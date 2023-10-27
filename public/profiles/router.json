@@ -1,0 +1,895 @@
+{
+  "routerPrefix": "/micGenric",
+  "moduleName": "micGenric",
+  "routerList": [
+    {
+      "path": "/deviceProcurementApply",
+      "name": "deviceProcurementApply",
+      "meta": "设备采购申请",
+      "component": "DeviceModules/DeviceProcurementApply/index",
+      "permList": []
+    },
+    {
+
+      "path": "/acceptanceReport",
+      "name": "acceptanceReport",
+      "meta": "设备验收报告",
+      "component": "DeviceModules/AcceptanceReport/index",
+      "permList": []
+    },
+    {
+      "path": "/deviceAcceptance/:accepttanceType",
+      "name": "deviceAcceptance",
+      "meta": "设备验收",
+      "component": "DeviceModules/DeviceAcceptance/index",
+      "permList": []
+    },
+    {
+      "path": "/acceptanceManagement",
+      "name": "acceptanceManagement",
+      "meta": "验收类型配置",
+      "component": "DeviceModules/AcceptanceManagement/index",
+      "permList": []
+    },
+    {
+      "path": "/EquipmentLedger",
+      "name": "EquipmentLedger",
+      "meta": "设备台账",
+      "component": "DeviceModules/EquipmentManagement/EquipmentLedger/index",
+      "permList": []
+    },
+    {
+      "path": "/EquipmentCheckTemplate",
+      "name": "EquipmentCheckTemplate",
+      "meta": "设备点检模板",
+      "component": "DeviceModules/EquipmentManagement/EquipmentCheckTemplate",
+      "permList": []
+    },{
+      "path": "/EquipmentCheckConfig",
+      "name": "EquipmentCheckConfig",
+      "meta": "设备点检配置",
+      "component": "DeviceModules/EquipmentManagement/EquipmentCheckConfig",
+      "permList": []
+    },{
+      "path": "/EquipmentCheck",
+      "name": "EquipmentCheck",
+      "meta": "设备点检",
+      "component": "DeviceModules/EquipmentManagement/EquipmentCheck",
+      "permList": []
+    },{
+      "path": "/demoShow",
+      "name": "demoShow",
+      "meta": "测试功能页面",
+      "component": "DeviceModules/demo/index",
+      "permList": []
+    },
+    {
+      "path": "/satisfactionSurvey",
+      "name": "satisfactionSurvey",
+      "meta": "满意度调查",
+      "component": "SatisfactionSurvey/index",
+      "permList": []
+    },
+    {
+      "path": "/standingBook",
+      "name": "standingBook",
+      "meta": "设备台账",
+      "component": "DeviceManagement/standingBook/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        },
+        {
+          "name": "打印样品标签(不需要该功能时勾选)",
+          "symbolName": "NOprintSampleLabel"
+        },
+        {
+          "name": "设备排期",
+          "symbolName": "ganttChart"
+        }
+      ]
+    },
+    {
+      "path": "/equipmentStatus",
+      "name": "equipmentStatus",
+      "meta": "设备状态",
+      "component": "DeviceManagement/equipmentStatus/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/usageRecord",
+      "name": "usageRecord",
+      "meta": "使用记录",
+      "component": "DeviceManagement/usageRecord/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/equipmentCollect",
+      "name": "equipmentCollect",
+      "meta": "设备领用",
+      "component": "DeviceManagement/equipment/Collect/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/equipmentReturn",
+      "name": "equipmentReturn",
+      "meta": "设备归还",
+      "component": "DeviceManagement/equipment/return/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/maintenancePlan",
+      "name": "maintenancePlan",
+      "meta": "维修保养计划",
+      "component": "DeviceManagement/maintenance/maintenancePlan/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        },
+        {
+          "name": "撤回",
+          "symbolName": "cancel"
+        }
+      ]
+    },
+    {
+      "path": "/maintenanceRecords",
+      "name": "maintenanceRecords",
+      "meta": "维修保养记录",
+      "component": "DeviceManagement/maintenance/maintenanceRecords/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/calibrationPlan",
+      "name": "calibrationPlan",
+      "meta": "检定校准计划",
+      "component": "DeviceManagement/calibration/maintenancePlan/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/calibrationRecords",
+      "name": "calibrationRecords",
+      "meta": "检定校准记录",
+      "component": "DeviceManagement/calibration/maintenanceRecords/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/intermediateChecksPlan",
+      "name": "intermediateChecksPlan",
+      "meta": "期间核查计划",
+      "component": "DeviceManagement/intermediateChecks/maintenancePlan/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/intermediateChecksRecords",
+      "name": "intermediateChecksRecords",
+      "meta": "期间核查记录",
+      "component": "DeviceManagement/intermediateChecks/maintenanceRecords/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/equipmentRepair",
+      "name": "equipmentRepair",
+      "meta": "设备维修",
+      "component": "DeviceManagement/equipmentRepair/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/scrapApplication",
+      "name": "scrapApplication",
+      "meta": "设备报废",
+      "component": "DeviceManagement/scrapApplication/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/ctrManage",
+      "name": "ctrManage",
+      "meta": "受控文件管理",
+      "component": "FilesManagement/ctrManage/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        },
+        {
+          "name": "查看",
+          "symbolName": "detail"
+        },
+        {
+          "name": "修改",
+          "symbolName": "edit"
+        },
+        {
+          "name": "删除",
+          "symbolName": "delete"
+        }
+      ]
+    },
+    {
+      "path": "/externalFiles",
+      "name": "externalFiles",
+      "meta": "外来文件管理",
+      "component": "FilesManagement/externalFiles/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        },
+        {
+          "name": "删除",
+          "symbolName": "delete"
+        }
+      ]
+    },
+    {
+      "path": "/filesPrint",
+      "name": "filesPrint",
+      "meta": "文件借阅管理",
+      "component": "FilesManagement/filesPrint/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/filesChange",
+      "name": "filesChange",
+      "meta": "文件更改管理",
+      "component": "FilesManagement/filesChange/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/filesReplace",
+      "name": "filesReplace",
+      "meta": "文件替换管理",
+      "component": "FilesManagement/filesReplace/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/filesCancel",
+      "name": "filesCancel",
+      "meta": "文件作废管理",
+      "component": "FilesManagement/filesCancel/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/filesArchive",
+      "name": "filesArchive",
+      "meta": "文件归档管理",
+      "component": "FilesManagement/filesArchive/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/supplier",
+      "name": "supplier",
+      "meta": "供应商管理",
+      "component": "supplier/index",
+      "permList": []
+    },
+    {
+      "path": "/modeler",
+      "name": "modeler",
+      "meta": "流程模型管理",
+      "component": "activiti/modeler/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/definition",
+      "name": "definition",
+      "meta": "流程实例管理",
+      "component": "activiti/definition/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/actIdGroup",
+      "name": "actIdGroup",
+      "meta": "流程用户组浏览",
+      "component": "activiti/actIdGroup/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/actIdUser",
+      "name": "actIdUser",
+      "meta": "流程用户浏览",
+      "component": "activiti/actIdUser/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/diyProcess",
+      "name": "diyProcess",
+      "meta": "我的审批",
+      "component": "DiyProcess/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/process",
+      "name": "process",
+      "meta": "我的审批",
+      "component": "process/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/processList",
+      "name": "processList",
+      "meta": "我的审批",
+      "component": "processList/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/meteringUnit",
+      "name": "meteringUnit",
+      "meta": "计量单位管理",
+      "component": "standardManagement/metering/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/detectTypeManage",
+      "name": "detectTypeManage",
+      "meta": "检测类别管理",
+      "component": "standardManagement/check/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/itemMethodManage",
+      "name": "itemMethodManage",
+      "meta": "项目方法管理",
+      "component": "standardManagement/itemMethod/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        },
+        {
+          "name": "新增/修改-检测部门是否必填",
+          "symbolName": "Department-Required"
+        }
+      ]
+    },
+    {
+      "path": "/itemMethodManageByKevinForm",
+      "name": "itemMethodManageByKevinForm",
+      "meta": "项目方法管理动态表单版",
+      "component": "standardManagement/itemMethodByKevinForm/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        },
+        {
+          "name": "新增/修改-检测部门是否必填",
+          "symbolName": "Department-Required"
+        }
+      ]
+    },
+    {
+      "path": "/projectGroupManage",
+      "name": "projectGroupManage",
+      "meta": "项目分组管理",
+      "component": "standardManagement/ProjectGroup/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/samplingPartial",
+      "name": "samplingPartial",
+      "meta": "采样分装管理",
+      "component": "standardManagement/sampling/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/judgingStandard",
+      "name": "judgingStandard",
+      "meta": "判定标准管理",
+      "component": "standardManagement/judgingStandard/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/essentialInformation",
+      "name": "essentialInformation",
+      "meta": "基本信息",
+      "component": "ChemicalManagement/essentialInformation/index",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        },
+        {
+          "name": "添加",
+          "symbolName": "JBXX-TJ"
+        },
+        {
+          "name": "调整分类",
+          "symbolName": "JBXX-TZFL"
+        },
+        {
+          "name": "导入",
+          "symbolName": "JBXX-DR"
+        },
+        {
+          "name": "删除",
+          "symbolName": "JBXX-SC"
+        },
+        {
+          "name": "分类删除",
+          "symbolName": "JBXX-HCFL-SC"
+        },
+        {
+          "name": "分类修改",
+          "symbolName": "JBXX-HCFL-XG"
+        },
+        {
+          "name": "分类增加",
+          "symbolName": "JBXX-HCFL-ZJ"
+        }
+      ]
+    },
+    {
+      "path": "/purchaseApply",
+      "name": "purchaseApply",
+      "meta": "采购申请",
+      "component": "ChemicalManagement/purchase/apply",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/purchaseOrder",
+      "name": "purchaseOrder",
+      "meta": "采购订单",
+      "component": "ChemicalManagement/purchase/order",
+      "permList": []
+    },
+    {
+      "path": "/acceptanceWarehousing",
+      "name": "acceptanceWarehousing",
+      "meta": "验收入库",
+      "component": "ChemicalManagement/AcceptanceWarehousing/index",
+      "permList": []
+    },
+    {
+      "path": "/collectingIssue",
+      "name": "collectingIssue",
+      "meta": "领用出库",
+      "component": "ChemicalManagement/collectingIssue/index",
+      "permList": []
+    },
+    {
+      "path": "/stockMove",
+      "name": "stockMove",
+      "meta": "库存移动",
+      "component": "ChemicalManagement/stock/move",
+      "permList": []
+    },
+    {
+      "path": "/stockQuery",
+      "name": "stockQuery",
+      "meta": "库存查询",
+      "component": "ChemicalManagement/stock/query",
+      "permList": []
+    },
+    {
+      "path": "/useStatistics",
+      "name": "useStatistics",
+      "meta": "领用统计",
+      "component": "ChemicalManagement/useStatistics/index",
+      "permList": []
+    },
+    {
+      "path": "/standardSampleStandard",
+      "name": "standardSampleStandard",
+      "meta": "标样值标准指定",
+      "component": "ChemicalManagement/standardSampleStandard/index",
+      "permList": []
+    },
+    {
+      "path": "/personnelRebuild",
+      "name": "personnelRebuild",
+      "meta": "人员档案管理",
+      "component": "personnelRebuild/index",
+      "permList": [
+        {
+          "name": "导入",
+          "symbolName": "import"
+        },
+        {
+          "name": "导出",
+          "symbolName": "export"
+        }
+      ]
+    },
+    {
+      "path": "/personnelManagement",
+      "name": "personnelManagement",
+      "meta": "人员档案管理",
+      "component": "PersonnelManagement/index",
+      "permList": [
+        {
+          "name": "导入",
+          "symbolName": "import"
+        },
+        {
+          "name": "导出",
+          "symbolName": "export"
+        }
+      ]
+    },
+    {
+      "path": "/trainingPlan",
+      "name": "trainingPlan",
+      "meta": "培训计划管理",
+      "component": "PersonnelManagement/trainingPlan/index",
+      "permList": []
+    },
+    {
+      "path": "/trainingRecord",
+      "name": "trainingRecord",
+      "meta": "培训记录管理",
+      "component": "PersonnelManagement/trainingRecord/index",
+      "permList": []
+    },
+    {
+      "path": "/evaluationRecord",
+      "name": "evaluationRecord",
+      "meta": "培训考评管理",
+      "component": "PersonnelManagement/evaluationRecord/index",
+      "permList": []
+    },
+    {
+      "path": "/approvalManage",
+      "name": "approvalManage",
+      "meta": "审批配置",
+      "component": "approvalManage/index",
+      "permList": []
+    },
+    {
+      "path": "/codeManage",
+      "name": "codeManage",
+      "meta": "基础编码管理",
+      "component": "codeManage/index",
+      "permList": []
+    },
+    {
+      "path": "/businessConfig",
+      "name": "businessConfig",
+      "meta": "业务类型配置",
+      "component": "businessConfig/index",
+      "permList": [
+        {
+          "name": "复制表单布局JSON",
+          "symbolName": "copyFormJson"
+        }
+      ]
+    },
+    {
+      "path": "/tagDesign",
+      "name": "tagDesign",
+      "meta": "标签设计器",
+      "component": "LabelDesignManagement/index",
+      "permList": []
+    },
+    {
+      "path": "/templateManage",
+      "name": "templateManage",
+      "meta": "打印模板管理",
+      "component": "templateManage/index",
+      "permList": []
+    },
+    {
+      "path": "/companyInfo",
+      "name": "companyInfo",
+      "meta": "公司基本信息",
+      "component": "deptInfo/index",
+      "permList": []
+    },
+    {
+      "path": "/internalAuditPlan",
+      "name": "internalAuditPlan",
+      "meta": "内审计划",
+      "component": "qualityAssurance/internalAudit/auditPlan",
+      "permList": []
+    },
+    {
+      "path": "/internalAuditImplement",
+      "name": "internalAuditImplement",
+      "meta": "内审实施",
+      "component": "qualityAssurance/internalAudit/auditImplement",
+      "permList": []
+    },
+    {
+      "path": "/managementReviewPlan",
+      "name": "managementReviewPlan",
+      "meta": "管理评审计划",
+      "component": "qualityAssurance/managementReview/auditPlan",
+      "permList": []
+    },
+    {
+      "path": "/managementReviewImplement",
+      "name": "managementReviewImplement",
+      "meta": "管理评审实施",
+      "component": "qualityAssurance/managementReview/auditImplement",
+      "permList": []
+    },
+    {
+      "path": "/inconformityManage",
+      "name": "inconformityManage",
+      "meta": "不符合项管理",
+      "component": "qualityAssurance/inconformityManage/index",
+      "permList": []
+    },
+    {
+      "path": "/correctiveAction",
+      "name": "correctiveAction",
+      "meta": "纠正预防措施",
+      "component": "qualityAssurance/correctiveAction/index",
+      "permList": []
+    },
+    {
+      "path": "/index",
+      "name": "index",
+      "meta": "首页",
+      "component": "BigData/index",
+      "permList": []
+    },
+    {
+      "path": "/eniginManage",
+      "name": "eniginManage",
+      "meta": "环境区域管理",
+      "component": "CuextnManagement/enigin",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/deviceManage",
+      "name": "deviceManage",
+      "meta": "检测设备管理",
+      "component": "CuextnManagement/device",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/enrecord",
+      "name": "enrecord",
+      "meta": "环境记录",
+      "component": "CuextnManagement/enrecord",
+      "permList": [
+        {
+          "name": "新增",
+          "symbolName": "add"
+        }
+      ]
+    },
+    {
+      "path": "/designReportCenter",
+      "name": "designReportCenter",
+      "meta": "报告设计器",
+      "component": "reportCenter/index",
+      "permList": []
+    },
+    {
+      "path": "/showWebDoc",
+      "name": "showWebDoc",
+      "meta": "报告设计器",
+      "component": "reportCenter/show",
+      "permList": []
+    },
+    {
+      "path": "/editWebDoc",
+      "name": "editWebDoc",
+      "meta": "报告设计器",
+      "component": "reportCenter/edit",
+      "permList": []
+    },
+    {
+      "path": "/dataSource",
+      "name": "dataSource",
+      "meta": "数据源配置",
+      "component": "dataSource/index",
+      "permList": []
+    },
+    {
+      "path": "/executionTemplate",
+      "name": "executionTemplate",
+      "meta": "表单实例配置",
+      "component": "executionTemplate/index",
+      "permList": []
+    },
+    {
+      "path": "/defaultTemplate",
+      "name": "defaultTemplate",
+      "meta": "默认表单配置",
+      "component": "template/index",
+      "permList": []
+    },
+    {
+      "path": "/projectBgi",
+      "name": "projectBgi",
+      "meta": "登录页背景图",
+      "component": "projectConfig/projectBmi/index",
+      "permList": []
+    },
+    {
+      "path": "/projectInfo",
+      "name": "projectInfo",
+      "meta": "项目信息维护",
+      "component": "projectConfig/projectInfo/index",
+      "permList": []
+    },
+    {
+      "path": "/appVersion",
+      "name": "appVersion",
+      "meta": "App版本管理",
+      "component": "appVersion/index",
+      "permList": []
+    },
+    {
+      "path": "/qualityControlType",
+      "name": "qualityControlType",
+      "meta": "质控类型管理",
+      "component": "standardManagement/qualityControlType/index",
+      "permList": []
+    },
+    {
+      "path": "/warehouseManagement",
+      "name": "warehouseManagement",
+      "meta": "库位管理",
+      "component": "ChemicalManagement/warehouseManagement/index",
+      "permList": []
+    },
+    {
+      "path": "/productManagement",
+      "name": "productManagement",
+      "meta": "产品管理",
+      "component": "Product/index",
+      "permList": []
+    }
+  ]
+}

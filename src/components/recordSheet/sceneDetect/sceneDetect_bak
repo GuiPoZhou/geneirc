@@ -1,0 +1,643 @@
+<template>
+	<div style="flex:1">
+
+		<a-row>
+			<a-col span="22">
+				<div class="selected">
+					<span>检测结果</span>
+				</div>
+			</a-col>
+			<a-col span="2" v-if="extendedProperties.formShowType === 0">
+				<a-button type="primary" @click="equipmentShowAdd">添加仪器</a-button>
+			</a-col>
+		</a-row>
+
+		<a-table :columns="tableColumns" rowKey="dataIndex" size="middle" :scroll="{ x: 1800 }" bordered
+				 :data-source="extendedProperties.sheetSceneDetectList"
+				 :row-selection="{columnWidth: 50, selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+				 :pagination="false">
+
+			<template slot="itemCodeTitle">
+				方法编号 <a @click="batchAdd('itemCode')" style="color: #1890ff;">批</a>
+			</template>
+			<template slot="itemCode" slot-scope="text, record, index">
+				<a-input v-model="extendedProperties.sheetSceneDetectList[index].itemCode" :readOnly="true"
+						 @click="getMethod(record)" :maxLength="maxLength"/>
+			</template>
+
+			<template slot="detectLimitTitle">
+				方法检出限 <a @click="batchAdd('detectLimit')" style="color: #1890ff;">批</a>
+			</template>
+			<template slot="detectLimit" slot-scope="text, record, index">
+				<a-input v-model="extendedProperties.sheetSceneDetectList[index].detectLimit" :maxLength="maxLength"/>
+			</template>
+
+			<template slot="detectUnitStrTitle">
+				检出限单位 <a @click="batchAdd('detectUnitStr')" style="color: #1890ff;">批</a>
+			</template>
+			<template slot="detectUnitStr" slot-scope="text, record, index">
+				<a-input v-model="extendedProperties.sheetSceneDetectList[index].detectUnitStr" :readOnly="true"
+						 @click="getUnit(record, 'detectUnitStr')" :maxLength="maxLength"/>
+			</template>
+
+			<template slot="detectResultTitle">
+				检测结果 <a @click="batchAdd('detectResult')" style="color: #1890ff;">批</a>
+			</template>
+			<template slot="detectResult" slot-scope="text, record, index">
+				<a-input v-model="extendedProperties.sheetSceneDetectList[index].detectResult" :maxLength="maxLength"/>
+			</template>
+
+			<template slot="detectResultUnitStrTitle">
+				结果单位 <a @click="batchAdd('detectResultUnitStr')" style="color: #1890ff;">批</a>
+			</template>
+			<template slot="detectResultUnitStr" slot-scope="text, record, index">
+				<a-input v-model="extendedProperties.sheetSceneDetectList[index].detectResultUnitStr" :readOnly="true"
+						 @click="getUnit(record, 'detectResultUnitStr')" :maxLength="maxLength"/>
+			</template>
+
+			<template slot="instrumentCount" slot-scope="text, record, index">
+				<a @click="editEquipmentShow(record)">{{extendedProperties.sheetSceneDetectList[index].instrumentCount}}</a>
+			</template>
+
+		</a-table>
+
+		<!-- -------------------- 批量录入 开始 -------------------- -->
+		<a-modal title="批量录入" v-model="enterVisible" :close-on-click-modal="false" :close-on-press-escape="false"
+						 :getContainer="getContainer" width="300px" :append-to-body="true" @cancel="batchCancel" @ok="batchSubmit">
+
+			<a-row :gutter="8">
+				<a-input v-model="enterBatchContent" :maxLength="maxLength"/>
+			</a-row>
+
+			<template slot="footer">
+				<a-button key="submit" type="primary" @click="batchSubmit">
+					确定
+				</a-button>
+				<a-button key="back" @click="batchCancel">
+					取消
+				</a-button>
+			</template>
+
+		</a-modal>
+		<!-- -------------------- 批量录入 结束 -------------------- -->
+
+		<!-- -------------------- 选择仪器 开始 -------------------- -->
+		<a-modal title="选择仪器" v-model="equipmentVisible" :close-on-click-modal="false" :close-on-press-escape="false"
+				 :getContainer="getContainer"
+				 width="1000px" @cancel="equipmentCancel" @ok="equipmentSubmit">
+			<a-row :gutter="8">
+				<a-col :span="6">
+					<a-form-item label="仪器名称" prop="equipmentName">
+						<a-input v-model="equipmentQueryParam.equipmentName"/>
+					</a-form-item>
+				</a-col>
+				<a-col :span="6">
+					<a-form-item label="仪器编码" prop="equipmentNumber">
+						<a-input v-model="equipmentQueryParam.equipmentNumber"/>
+					</a-form-item>
+				</a-col>
+				<a-col :span="6">
+					<a-form-item label="仪器型号" prop="equipmentModel">
+						<a-input v-model="equipmentQueryParam.equipmentModel"/>
+					</a-form-item>
+				</a-col>
+				<a-col :span="6">
+					<a-form-item>
+						<a-button @click="equipmentQuery" type="primary" icon="search" >查询</a-button>
+					</a-form-item>
+				</a-col>
+			</a-row>
+
+			<a-table :columns="equipmentColumns" rowKey="dataIndex"
+					 :data-source="equipmentDataList"
+					 :row-selection="{selectedRowKeys: equipmentSelectedRowKeys, onChange: onEquipmentSelectChange}"
+					 :pagination="false">
+			</a-table>
+
+			<template slot="footer">
+				<a-button key="submit" type="primary" @click="equipmentSubmit">
+					确定
+				</a-button>
+				<a-button key="back" @click="equipmentCancel">
+					取消
+				</a-button>
+			</template>
+
+		</a-modal>
+		<!-- -------------------- 选择仪器 结束 -------------------- -->
+
+		<!-- -------------------- 编辑仪器 开始 -------------------- -->
+		<a-modal title="编码仪器" v-model="editEquipmentVisible" :close-on-click-modal="false" :close-on-press-escape="false"
+				 :getContainer="getContainer"
+				 width="1000px" @cancel="editEquipmentCancel" @ok="editEquipmentSubmit" @onCancel="editEquipmentOnCancel">
+
+			<a-table :columns="editEquipmentColumns" rowKey="dataIndex"
+					 :data-source="editEquipmentDataList"
+					 :pagination="false">
+
+				<template slot="operation" slot-scope="text, record, index" v-if="extendedProperties.formShowType === 0">
+					<a-button size="mini" type="link" icon="delete" @click="editDelete(record,index)">删除</a-button>
+				</template>
+
+			</a-table>
+
+			<template slot="footer">
+				<a-button key="submit" type="primary" @click="editEquipmentSubmit">
+					确定
+				</a-button>
+				<a-button key="back" @click="editEquipmentOnCancel">
+					取消
+				</a-button>
+			</template>
+
+		</a-modal>
+		<!-- -------------------- 编辑仪器 结束 -------------------- -->
+
+		<!-- 方法编号选择 -->
+		<selectMethod :selectMethodShow.sync="selectMethodShow"
+					  @changeItemCode="changeItemCode"/>
+		<!-- 单位选择 -->
+		<selectUnit :visible.sync="selectUnitShow"
+					@backfill="changeUnit"/>
+
+	</div>
+
+</template>
+
+<script>
+	import selectMethod from "@/components/detectionManage/resultEntry/selectMethod";
+	import selectUnit from "@/components/common/selectUnit";
+	import {listAllData} from "@/api/instrumentUseRecord/instrumentUseRecord";
+
+	const tableColumns = [
+		{
+			title: '频次',
+			dataIndex: 'rate',
+			align: 'center',
+			fixed: 'left',
+			width: 70
+		},
+		{
+			title: '样品编码',
+			dataIndex: 'sampleCode',
+			align: 'center',
+			fixed: 'left',
+			width: 160
+		},
+		{
+			title: '检测项目',
+			dataIndex: 'detectItem',
+			align: 'center',
+			fixed: 'left',
+			width: 160
+		},
+		{
+			dataIndex: 'itemCode',
+			align: 'center',
+			slots: {title: 'itemCodeTitle'},
+			scopedSlots: {customRender: 'itemCode'}
+		},
+		{
+			title: '子法名称',
+			dataIndex: 'subname',
+			align: 'center'
+		},
+		{
+			title: '基质',
+			dataIndex: 'stroma',
+			align: 'center'
+		},
+		{
+			title: '指定方法',
+			dataIndex: 'customerAppoint',
+			align: 'center'
+		},
+		{
+			dataIndex: 'detectLimit',
+			align: 'center',
+			slots: {title: 'detectLimitTitle'},
+			scopedSlots: {customRender: 'detectLimit'}
+		},
+		{
+			dataIndex: 'detectUnitStr',
+			align: 'center',
+			slots: {title: 'detectUnitStrTitle'},
+			scopedSlots: {customRender: 'detectUnitStr'}
+		},
+		{
+			dataIndex: 'detectResult',
+			align: 'center',
+			slots: {title: 'detectResultTitle'},
+			scopedSlots: {customRender: 'detectResult'}
+		},
+		{
+			dataIndex: 'detectResultUnitStr',
+			align: 'center',
+			slots: {title: 'detectResultUnitStrTitle'},
+			scopedSlots: {customRender: 'detectResultUnitStr'}
+		},
+		{
+			title: '检测仪器',
+			dataIndex: 'instrumentCount',
+			align: 'center',
+			scopedSlots: {customRender: 'instrumentCount'}
+		}
+	]
+
+	const equipmentColumns = [
+		{
+			title: '序号',
+			dataIndex: 'index',
+			width: 65,
+			align: 'center',
+			customRender: (text, record, index) => `${index + 1}`
+		},
+		{
+			title: '仪器编号',
+			dataIndex: 'equipmentNumber',
+			align: 'center'
+		},
+		{
+			title: '仪器名称',
+			dataIndex: 'equipmentName',
+			align: 'center'
+		},
+		{
+			title: '仪器型号',
+			dataIndex: 'equipmentModel',
+			align: 'center'
+		},
+		{
+			title: '仪器分类',
+			dataIndex: 'equipmentClassName',
+			align: 'center'
+		}
+	]
+
+	const editEquipmentColumns = [
+		{
+			title: '序号',
+			dataIndex: 'index',
+			width: 65,
+			align: 'center',
+			customRender: (text, record, index) => `${index + 1}`
+		},
+		{
+			title: '仪器编号',
+			dataIndex: 'equipmentNumber',
+			align: 'center'
+		},
+		{
+			title: '仪器名称',
+			dataIndex: 'equipmentName',
+			align: 'center'
+		},
+		{
+			title: '仪器型号',
+			dataIndex: 'equipmentModel',
+			align: 'center'
+		},
+		{
+			title: '仪器分类',
+			dataIndex: 'equipmentClassName',
+			align: 'center'
+		}, {
+			title: '操作',
+			dataIndex: 'operation',
+			align: 'center',
+			scopedSlots: {customRender: 'operation'},
+		}
+	]
+
+	export default {
+		name: 'sceneDetect',
+		watch: {
+			chooseVisible(val) {
+				console.log(val);
+				if (val) {
+					this.init();
+				}
+			}
+		},
+		components: {
+			selectMethod,
+			selectUnit
+		},
+		data() {
+			return {
+				tableColumns,
+				equipmentColumns,
+				editEquipmentColumns,
+				readOnly: false,
+				// 批量录入显示
+				enterVisible: false,
+				// 记录批量修改的列
+				enterBatchColumn: '',
+				// 批量修改的列内容
+				enterBatchContent: '',
+				// 选中的记录行
+				selectedRowKeys: [],
+				// 输入长度限制
+				maxLength: 50,
+				// 添加仪器数据显示
+				equipmentVisible: false,
+				// 选择仪器查询
+				equipmentQueryParam: {
+					equipmentName: "",
+					equipmentNumber: "",
+					equipmentModel: ""
+				},
+				// 仪器列表数据
+				equipmentDataList: [],
+				// 仪器选中key列表
+				equipmentSelectedRowKeys: [],
+				// 仪器选中列表数据
+				equipmentChooseDataList: [],
+				// 编辑仪器显示
+				editEquipmentVisible: false,
+				// 编辑检测结果对象
+				editEquipmentRecord: {},
+				// 编辑列表
+				editEquipmentDataList: [],
+				// 方法编码选择显示
+				selectMethodShow: false,
+				// 方法编码选择内容
+				selectMethodData: {},
+				// 单位选择显示
+				selectUnitShow: false,
+				// 单位选择内容
+				selectUnitData: {},
+				selectUnitId: "",
+				selectUnitColumn: ""
+			}
+		},
+		props: {
+			extendedProperties: {
+				// 出参结果数据列表
+				sheetSceneDetectList: []
+			}
+		},
+		mounted() {
+			console.log('sceneDetect');
+			this.init();
+			this.refill();
+		},
+		methods: {
+			getContainer() {
+				return this.$parent.$el;
+			},
+			init() {
+				console.log(this.extendedProperties.itemInfoList);
+				if (this.extendedProperties.itemInfoList) {
+					this.$set(this.extendedProperties, 'sheetSceneDetectList', this.extendedProperties.itemInfoList);
+					this.extendedProperties.sheetSceneDetectList.forEach(item => {
+						item.instrumentCount = 0;
+					})
+				}
+				let filterType = [5 ,6 ,7]
+				this.extendedProperties.sheetSceneDetectList = this.extendedProperties.sheetSceneDetectList.filter(item => !filterType.includes(item.sampleType) && item.sceneDetect === '是');
+			},
+			refill() {
+			},
+			onSelectChange(selectedRowKeys, selectedRow) {
+				this.selectedRowKeys = selectedRowKeys;
+			},
+			// 批量录入
+			batchAdd(column) {
+				if (this.selectedRowKeys.length != 0) {
+					this.enterBatchColumn = column;
+
+					if (this.enterBatchColumn == 'itemCode') {
+						// 方法编号
+						this.getMethod(null);
+					} else if (this.enterBatchColumn == 'detectUnitStr') {
+						// 检出限单位
+						this.selectUnitId = "detectUnit";
+						this.selectUnitColumn = "detectUnitStr";
+						this.getUnit(null);
+					} else if (this.enterBatchColumn == 'detectResultUnitStr') {
+						// 检出限单位
+						this.selectUnitId = "detectResultUnit";
+						this.selectUnitColumn = "detectResultUnitStr";
+						this.getUnit(null);
+					} else {
+						this.enterBatchContent = "";
+						this.enterVisible = true;
+					}
+				} else {
+					this.$message.warning('请选择需要批量修改行数据');
+				}
+			},
+			// 批量确定
+			batchSubmit() {
+				if (this.enterBatchContent != '') {
+					this.selectedRowKeys.forEach((data) => {
+						this.extendedProperties.sheetSceneDetectList[data][this.enterBatchColumn] = this.enterBatchContent;
+					});
+				}
+				this.batchCancel();
+			},
+			// 批量取消
+			batchCancel() {
+				this.enterVisible = false;
+			},
+			// 选择仪器添加
+			equipmentShowAdd() {
+				if (this.selectedRowKeys.length == 0) {
+					this.$message.warning('请选择需要批量修改行数据');
+					return;
+				}
+				this.equipmentVisible = true;
+				this.equipmentQueryParam = {
+					equipmentName: "",
+					equipmentNumber: "",
+					equipmentModel: ""
+				}
+				this.equipmentQuery();
+				this.equipmentSelectedRowKeys = [];
+				this.equipmentChooseDataList = [];
+			},
+			// 选择仪器查询
+			equipmentQuery() {
+				this.loading = true;
+				if(this.extendedProperties.entrustId){
+					this.equipmentQueryParam.entrustId = this.extendedProperties.entrustId
+				}
+				listAllData(this.equipmentQueryParam).then(response => {
+					this.equipmentDataList = response.data;
+					this.loading = false;
+				})
+			},
+			// 选择仪器选中
+			onEquipmentSelectChange(selectedRowKeys, selectedRow) {
+				this.equipmentSelectedRowKeys = selectedRowKeys;
+				this.equipmentChooseDataList = selectedRow;
+			},
+			// 选择仪器确定
+			equipmentSubmit() {
+				let length = this.equipmentChooseDataList.length;
+				let objList = JSON.parse(JSON.stringify(this.equipmentChooseDataList));
+				this.selectedRowKeys.forEach((data) => {
+					this.extendedProperties.sheetSceneDetectList[data].instrumentCount = length;
+					this.extendedProperties.sheetSceneDetectList[data].instrumentList = objList;
+				});
+				this.equipmentCancel();
+			},
+			// 仪器选择取消
+			equipmentCancel() {
+				this.equipmentVisible = false;
+			},
+			getContainer() {
+				return this.$parent.$el;
+			},
+			// 编辑仪器显示
+			editEquipmentShow(record) {
+				if (record.instrumentList) {
+					let objList = JSON.parse(JSON.stringify(record.instrumentList));
+					this.editEquipmentDataList = objList;
+				}
+				this.editEquipmentRecord = record;
+				this.editEquipmentVisible = true;
+			},
+			// 编辑仪器确定
+			editEquipmentSubmit() {
+				let length = this.editEquipmentDataList.length;
+				let objList = JSON.parse(JSON.stringify(this.editEquipmentDataList));
+				this.editEquipmentRecord.instrumentList = objList;
+				this.editEquipmentRecord.instrumentCount = length;
+				this.editEquipmentCancel();
+			},
+			// 编辑仪器取消
+			editEquipmentCancel() {
+				this.editEquipmentVisible = false;
+			},
+			// 编辑仪器取消回调
+			editEquipmentOnCancel() {
+				this.editEquipmentDataList = [];
+				this.editEquipmentRecord = {};
+				this.editEquipmentVisible = false;
+			},
+			// 编辑仪器删除
+			editDelete(record, index) {
+				this.$confirm('确认删除该仪器信息?', "警告", {
+					confirmButtonText: "确定",
+					cancelButtonText: "取消",
+					type: "warning"
+				}).then(() => {
+					this.editEquipmentDataList.splice(index, 1);
+				});
+			},
+			// 选择方法编号
+			getMethod(record) {
+				if (record) {
+					this.selectMethodData = record;
+				} else {
+					this.selectMethodData = null;
+				}
+				this.selectMethodShow = true;
+			},
+			// 选择方法编号回调
+			changeItemCode(val) {
+				if (this.selectMethodData) {
+					this.selectMethodData.itemCode = val;
+				} else {
+					this.selectedRowKeys.forEach((data) => {
+						this.extendedProperties.sheetSceneDetectList[data].itemCode = val;
+					});
+				}
+			},
+			// 选择单位
+			getUnit(record, column) {
+				if (record) {
+					this.selectUnitData = record;
+					if (column == 'detectUnitStr') {
+						// 检出限单位
+						this.selectUnitId = "detectUnit";
+						this.selectUnitColumn = "detectUnitStr";
+					} else if (column == 'detectResultUnitStr') {
+						// 结果单位
+						this.selectUnitId = "detectResultUnit";
+						this.selectUnitColumn = "detectResultUnitStr";
+					}
+				} else {
+					this.selectUnitData = null;
+				}
+				this.selectUnitShow = true;
+			},
+			// 选择单位回调
+			changeUnit(record) {
+				if (this.selectUnitData) {
+					this.selectUnitData[this.selectUnitId] = record.id;
+					this.selectUnitData[this.selectUnitColumn] = record.unitName;
+				} else {
+					this.selectedRowKeys.forEach((data) => {
+						this.extendedProperties.sheetSceneDetectList[data][this.selectUnitId] = record.id;
+						this.extendedProperties.sheetSceneDetectList[data][this.selectUnitColumn] = record.unitName;
+					});
+				}
+			}
+		}
+	}
+</script>
+
+<style lang="less" scoped>
+	/deep/ .ant-form {
+		display: flex;
+		align-items: center;
+
+		.ant-form-item {
+			margin-bottom: 0;
+		}
+	}
+
+	/deep/ .ant-table-header {
+		margin-bottom: 0 !important;
+		min-width: 100% !important;
+		overflow: hidden !important;
+	}
+
+	/deep/ .ant-form-inline {
+		height: 50px;
+	}
+
+	/deep/ .ant-form-item-label {
+		padding: 0;
+	}
+
+	/deep/ .ant-form-item {
+		padding-bottom: 0 !important;
+		display: flex;
+		align-items: center;
+	}
+
+	.selected {
+		span {
+			font-weight: bolder;
+			font-size: 24px;
+		}
+	}
+
+	/deep/ .ant-table-row-cell-break-word {
+		height: 57px;
+	}
+
+	/deep/ .ant-modal-title {
+		margin: 0;
+		color: rgba(0, 0, 0, 0.85);
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 22px;
+		word-wrap: break-word;
+		text-align: center;
+		font-weight: bold !important;
+	}
+
+	/deep/ .ant-modal-footer {
+		padding: 10px 16px;
+		text-align: right;
+		background: transparent;
+		border-top: 1px solid #e8e8e8;
+		border-radius: 0 0 4px 4px;
+		text-align: center;
+	}
+</style>

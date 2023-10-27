@@ -1,0 +1,219 @@
+{
+    "KevinWidget": {
+        "title": "委托编制1",
+        "formlabelPosition": "top",
+        "autoEvents": {
+            "getCurrentToekn":"console.log(localStorage.getItem('Admin-Token'))"
+        },
+        "manuallyEvents": {},
+        "diaLogFooterButton": [
+            {
+                "title": "确定",
+                "type": "primary",
+                "size": "small",
+                "events": "ctx.$message.success('Its work')"
+            },
+            {
+                "title": "取消",
+                "type": "",
+                "size": "small",
+                "events": "ctx.$emit('close')"
+            }
+        ],
+        "children": [
+            {
+                "components": "el-input",
+                "colSpan": 12,
+                "title": "用户名称",
+                "vModel": "userName",
+                "vModelType": "fixed",
+                "options": {
+                    "title": "用户名称",
+                    "vModel": "userName",
+                    "vModelType": "fixed"
+                }
+            },
+            {
+                "components": "el-tabs",
+                "active": "0",
+                "colSpan": 24,
+                "attributes": {
+                    "type": "card",
+                    "tabPosition": "top",
+                    "Events": {
+                        "tabClick": ""
+                    }
+                },
+                "children": [
+                    {
+                        "title": "一级第一标签",
+                        "children": [
+                            {
+                                "components": "el-input",
+                                "colSpan": 12,
+                                "title": "1-1输入框1",
+                                "vModel": "userName",
+                                "vModelType": "fixed",
+                                "options": {
+                                    "title": "用户名称",
+                                    "vModel": "userName",
+                                    "vModelType": "fixed"
+                                }
+                            },
+                            {
+                                "components": "el-input",
+                                "colSpan": 12,
+                                "title": "1-1输入框2",
+                                "vModel": "userName",
+                                "vModelType": "fixed",
+                                "options": {
+                                    "title": "用户名称",
+                                    "vModel": "userName",
+                                    "vModelType": "fixed"
+                                }
+                            },
+                            {
+                                "components": "el-tabs",
+                                "active": "0",
+                                "colSpan": 24,
+                                "attributes": {
+                                    "type": "-",
+                                    "tabPosition": "top",
+                                    "Events": {
+                                        "tabClick": ""
+                                    }
+                                },
+                                "children": [
+                                    {
+                                        "title": "一级第一 二级第一标签",
+                                        "children": [
+                                            {
+                                                "components": "el-input",
+                                                "colSpan": 12,
+                                                "title": "1-1-1输入框1",
+                                                "vModel": "userName",
+                                                "vModelType": "fixed",
+                                                "options": {
+                                                    "title": "用户名称",
+                                                    "vModel": "userName",
+                                                    "vModelType": "fixed"
+                                                }
+                                            },
+                                            {
+                                                "components": "el-input",
+                                                "colSpan": 12,
+                                                "title": "1-1-1输入框2",
+                                                "vModel": "userName",
+                                                "vModelType": "fixed",
+                                                "options": {
+                                                    "title": "用户名称",
+                                                    "vModel": "userName",
+                                                    "vModelType": "fixed"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "title": "一级第一 二级第二标签",
+                                        "children": [
+                                            {
+                                                "components": "el-input",
+                                                "colSpan": 12,
+                                                "title": "1-1-2输入框1",
+                                                "vModel": "userName",
+                                                "vModelType": "fixed",
+                                                "options": {
+                                                    "title": "用户名称",
+                                                    "vModel": "userName",
+                                                    "vModelType": "fixed"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "title": "一级第二标签",
+                        "children": [
+                            {
+                                "components": "el-input",
+                                "colSpan": 24,
+                                "title": "样品名称",
+                                "vModel": "userName",
+                                "vModelType": "fixed",
+                                "options": {
+                                    "title": "用户名称",
+                                    "vModel": "userName",
+                                    "vModelType": "fixed"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "components": "el-row",
+                "colSpan": 24,
+                "children": [
+                    {
+                        "components": "el-input",
+                        "colSpan": 12,
+                        "title": "委托人",
+                        "vModel": "userName",
+                        "vModelType": "fixed",
+                        "options": {
+                            "title": "用户名称",
+                            "vModel": "userName",
+                            "vModelType": "fixed"
+                        }
+                    },
+                    {
+                        "components": "el-input",
+                        "colSpan": 12,
+                        "title": "奥利给",
+                        "vModel": "userName",
+                        "vModelType": "fixed",
+                        "options": {
+                            "title": "用户名称",
+                            "vModel": "userName",
+                            "vModelType": "fixed"
+                        }
+                    }
+                ]
+            },
+            {
+                "components": "el-row",
+                "children": [
+                    {
+                        "components": "el-button",
+                        "colSpan": 24,
+                        "children": [
+                            {
+                                "title": "新增",
+                                "events": "console.log(ctx.addParam);"
+                            },
+                            {
+                                "title": "编辑",
+                                "events": "console.log('编辑按钮')"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "components": "el-input",
+                "colSpan": 12,
+                "title": "用户名aaa称",
+                "vModel": "userName",
+                "vModelType": "fixed",
+                "options": {
+                    "title": "用户名称",
+                    "vModel": "userName",
+                    "vModelType": "fixed"
+                }
+            }
+        ]
+    }
+}
